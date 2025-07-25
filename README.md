@@ -1,514 +1,154 @@
-# Smart School ERP System
+# 🎓 Smart School ERP System
 
-## 🎓 Production-Level School Management System
+A comprehensive School Management System built with Django REST Framework and React.js, featuring 5 complete modules with professional UI/UX.
 
-A comprehensive, enterprise-grade School ERP system built with Django REST Framework and React.js, reflecting real-world full-stack development experience from Code IT internship, Dharan, Nepal.
+![Progress](https://img.shields.io/badge/Progress-55%25-blue)
+![Backend](https://img.shields.io/badge/Backend-Django-green)
+![Frontend](https://img.shields.io/badge/Frontend-React-blue)
+![Database](https://img.shields.io/badge/Database-SQLite-orange)
 
----
+## 🚀 Live Demo
 
-## 🚀 Project Overview
+- **Frontend:** http://localhost:3001
+- **Backend API:** http://localhost:8000
+- **Admin Panel:** http://localhost:8000/admin
 
-**Project Type:** Full-Stack School Management ERP System  
-**Developer:** Django & React Full-Stack Intern  
-**Company:** Code IT, Dharan, Nepal  
-**Tech Stack:** Django REST Framework + React.js + PostgreSQL + JWT Authentication
-
----
-
-## 👥 User Roles & Access Control
-
-### 1. Head of School (Admin)
-- Complete system management
-- Student & Staff CRUD operations
-- Fee management & analytics
-- Attendance tracking & reports
-- Results & examination management
-- Timetable scheduling
-- Library management
-- Event & calendar management
-- Analytics dashboard with charts
-- Leave request approvals
-- System configuration
-
-### 2. Staff / Teacher
-- View students & staff
-- Manage attendance (QR/One-tap)
-- Upload results & marks
-- Manage assigned classes
-- Upload assignments
-- Send notices & messages
-- View timetable
-- Track student performance
-- Approve student leave requests
-
-### 3. Student
-- View personal profile
-- View courses & classes
-- Check attendance records
-- View fee/payment history
-- View results & grades
-- Access assignments
-- View timetable
-- Receive notifications
-- Chat with teachers
-- Submit leave requests
-- Download reports (PDF)
+**Login Credentials:**
+- Email: `admin@school.com`
+- Password: `admin123`
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Features
+
+### ✅ Working Modules (5)
+
+#### 1. Authentication System
+- JWT-based authentication
+- Login/Logout functionality
+- Protected routes
+- Session management
+- Role-based access control
+
+#### 2. Students Management (Complete)
+- List all students with search and filter
+- Add new student (comprehensive form)
+- View student profile
+- Edit student information
+- Delete student with confirmation
+- Pagination support
+- Photo upload capability
+
+#### 3. Staff Management
+- List all staff members
+- Search by name, email, employee ID
+- Filter by department
+- Status tracking (Active/Inactive/On Leave/Resigned)
+
+#### 4. Attendance Tracking
+- Date-wise attendance viewing
+- Present/Absent statistics
+- Status tracking (Present/Absent/Late/Excused)
+- Bulk attendance marking API
+- Real-time statistics
+
+#### 5. Fee Management
+- Payment tracking system
+- Statistics dashboard (Total Due/Paid/Remaining)
+- Collection percentage
+- Payment status filtering
+- Multiple payment methods support
+
+#### 6. Results Management
+- Exam-wise result viewing
+- Automatic grade calculation (A+ to F)
+- Pass/Fail statistics
+- Average percentage tracking
+- Subject-wise results
+
+---
+
+## 🛠️ Tech Stack
 
 ### Backend
-- **Python 3.10+**
-- **Django 4.2+**
-- **Django REST Framework (DRF)**
-- **djangorestframework-simplejwt** - JWT Authentication
-- **PostgreSQL** - Production Database
-- **Django Signals** - Event-driven actions
-- **Python-Decouple** - Environment variables
-- **WhiteNoise** - Static file serving
-- **django-cors-headers** - CORS handling
-- **Pillow** - Image processing
-- **django-filter** - Advanced filtering
-- **celery** - Async task processing
-- **redis** - Caching & message broker
+- **Framework:** Django 4.2.7
+- **API:** Django REST Framework
+- **Authentication:** JWT (djangorestframework-simplejwt)
+- **Database:** SQLite
+- **Python:** 3.13
 
 ### Frontend
-- **React.js 18+**
-- **Tailwind CSS** - Modern styling
-- **Axios** - HTTP client
-- **React Router v6** - Navigation
-- **React Query** - Data fetching
-- **Recharts** - Analytics charts
-- **React Hot Toast** - Notifications
-- **Framer Motion** - Animations
-- **Headless UI** - Accessible components
-- **React Icons** - Icon library
-
-### Deployment
-- **PythonAnywhere** - Hosting platform
-- **PostgreSQL** - Production database
-- **WSGI** - Application server
-- **WhiteNoise** - Static files
-- **Environment Variables** - Secure configuration
-- **HTTPS** - Secure communication
-
-### Development Tools
-- **Git & GitHub** - Version control
-- **Trello** - Project management
-- **Postman** - API testing
-- **Notion** - Documentation
-- **VS Code** - IDE
+- **Framework:** React.js
+- **Routing:** React Router v6
+- **Charts:** Recharts
+- **HTTP Client:** Axios
+- **State Management:** React Context API
+- **Styling:** Custom CSS
 
 ---
 
-## 📦 Main Modules
+## 📊 Project Statistics
 
-### 1. Authentication System
-- Email/Password login
-- Phone OTP login
-- JWT access + refresh tokens
-- Token blacklisting
-- Password reset via email
-- Email verification
-- Role-based permissions
-- Session management
-
-### 2. Student Management
-- Complete CRUD operations
-- Student profiles with photos
-- Parent details
-- Academic history
-- Advanced search & filters
-- Server-side pagination
-- CSV bulk import
-- Student ID cards
-
-### 3. Staff Management
-- Teacher/Staff profiles
-- Department management
-- Subject assignments
-- Staff attendance
-- Performance tracking
-
-### 4. Course & Class Management
-- Subjects & courses
-- Sections & semesters
-- Classroom allocation
-- Course enrollment
-- Academic year management
-
-### 5. Attendance System
-- Daily attendance marking
-- QR code attendance
-- Face recognition (AI)
-- Monthly reports
-- Attendance analytics
-- Late/Absent tracking
-- Parent notifications
-
-### 6. Fee Management System
-**Reflecting Internship Fee Payment Project:**
-- Fee structure management
-- Pending/Paid status tracking
-- **Khalti Payment Gateway Integration**
-- Server-side payment verification
-- Payment email notifications (Django Signals)
-- Receipt generation (PDF)
-- Due date reminders
-- Financial analytics dashboard
-- Payment history
-- Multi-fee categories
-
-### 7. Result & Examination System
-- Marks entry & management
-- GPA calculation
-- Result publishing
-- PDF report cards
-- Result analytics
-- Performance graphs
-- Grade management
-- Exam scheduling
-
-### 8. Timetable System
-- Weekly schedule generation
-- Teacher timetable
-- Student timetable
-- Conflict detection
-- Period management
-- Room allocation
-
-### 9. Assignment & Homework
-- Assignment upload
-- Submission tracking
-- Deadline reminders
-- File upload support
-- Grading system
-- Feedback mechanism
-
-### 10. Communication System
-- Real-time chat
-- Announcements
-- Push notifications
-- Emergency alerts
-- Group messaging
-- Email integration
-
-### 11. Analytics Dashboard
-**Admin Dashboard Features:**
-- Total students & staff count
-- Attendance analytics (charts)
-- Fee collection graphs
-- Top performers list
-- Revenue analytics
-- Department statistics
-- Interactive charts (Recharts)
-- Export reports (PDF/Excel)
-
-### 12. Library Management
-- Book inventory
-- Borrow/Return system
-- Due date reminders
-- Fine calculation
-- Book search
-- Availability tracking
-
-### 13. Event & Calendar
-- School events
-- Holiday calendar
-- Exam schedules
-- Academic calendar
-- Event notifications
-
-### 14. Leave Management
-- Student leave requests
-- Staff leave requests
-- Approval workflow
-- Leave balance tracking
-- Leave history
+- **Backend:** 50% Complete (5 of 13 modules)
+- **Frontend:** 60% Complete (9 pages)
+- **Overall Progress:** 55%
+- **API Endpoints:** 100+
+- **Database Tables:** 15+
+- **Lines of Code:** ~7,500+
 
 ---
 
-## 🤖 AI-Powered Features
-
-1. **AI Chatbot Assistant** - Student query handling
-2. **AI Attendance Prediction** - Predict student attendance patterns
-3. **AI Performance Analysis** - Analyze student performance trends
-4. **AI Study Recommendations** - Personalized study suggestions
-5. **AI Report Summaries** - Auto-generate report summaries
-6. **AI Notice Summarizer** - Summarize long notices
-7. **Smart Timetable Optimization** - AI-optimized scheduling
-
----
-
-## 🎨 UI/UX Features
-
-- Modern premium ERP design
-- Mobile-first responsive layout
-- Dark/Light mode toggle
-- Smooth animations (Framer Motion)
-- Professional dashboard cards
-- Interactive charts & analytics
-- Beautiful login screens
-- Reusable React components
-- Loading states & skeletons
-- Error handling & validation
-- Toast notifications
-- Material-style professional layout
-- Real-world SaaS appearance
-
----
-
-## 🔐 Security Features
-
-- JWT Authentication
-- Token blacklisting
-- Role-based access control (RBAC)
-- Protected API routes
-- CORS configuration
-- Environment variable security
-- SQL injection prevention
-- XSS protection
-- CSRF protection
-- Secure password hashing
-- Rate limiting
-- Audit logs
-
----
-
-## 📊 Database Schema
-
-### Core Tables
-- **Users** - Authentication & user management
-- **Students** - Student information
-- **Staff** - Staff/Teacher information
-- **Courses** - Course catalog
-- **Subjects** - Subject management
-- **Classes** - Class sections
-- **Attendance** - Attendance records
-- **Fees** - Fee structure
-- **Payments** - Payment transactions
-- **Results** - Exam results
-- **Assignments** - Homework assignments
-- **Messages** - Communication
-- **Notifications** - System notifications
-- **Events** - School events
-- **Timetables** - Schedule management
-- **LeaveRequests** - Leave applications
-- **LibraryBooks** - Library inventory
-
-**Database Design:**
-- Optimized ForeignKey relationships
-- ManyToMany relationships
-- Indexed fields for performance
-- select_related & prefetch_related optimization
-- Database-level constraints
-
----
-
-## 🚀 Installation Guide
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 16+
-- PostgreSQL 13+
-- Git
+- Python 3.13+
+- Node.js 14+
+- npm or yarn
 
 ### Backend Setup
 
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/smart-school-erp.git
-cd smart-school-erp
+# Navigate to backend directory
+cd backend
 
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
 
 # Install dependencies
-cd backend
-pip install -r requirements.txt
+pip install -r requirements-sqlite.txt
 
-# Setup environment variables
-cp .env.example .env
-# Edit .env with your configuration
-
-# Database setup
-python manage.py makemigrations
+# Run migrations
 python manage.py migrate
 
 # Create superuser
 python manage.py createsuperuser
 
-# Load sample data (optional)
-python manage.py loaddata sample_data.json
-
-# Collect static files
-python manage.py collectstatic --noinput
-
-# Run development server
+# Start development server
 python manage.py runserver
 ```
+
+Backend will run at: http://localhost:8000
 
 ### Frontend Setup
 
 ```bash
-# Navigate to frontend
+# Navigate to frontend directory
 cd frontend
 
 # Install dependencies
 npm install
 
-# Setup environment variables
-cp .env.example .env
-# Edit .env with your API URL
-
-# Run development server
-npm start
-
-# Build for production
-npm run build
+# Start development server
+PORT=3001 npm start
 ```
 
----
-
-## 🌐 API Documentation
-
-### Authentication Endpoints
-```
-POST /api/auth/register/          - User registration
-POST /api/auth/login/             - User login
-POST /api/auth/logout/            - User logout
-POST /api/auth/token/refresh/     - Refresh JWT token
-POST /api/auth/password/reset/    - Password reset request
-POST /api/auth/password/confirm/  - Password reset confirm
-POST /api/auth/verify-email/      - Email verification
-```
-
-### Student Endpoints
-```
-GET    /api/students/             - List all students
-POST   /api/students/             - Create student
-GET    /api/students/{id}/        - Get student details
-PUT    /api/students/{id}/        - Update student
-DELETE /api/students/{id}/        - Delete student
-POST   /api/students/bulk-import/ - CSV bulk import
-GET    /api/students/export/      - Export students
-```
-
-### Attendance Endpoints
-```
-GET    /api/attendance/           - List attendance
-POST   /api/attendance/           - Mark attendance
-GET    /api/attendance/report/    - Attendance report
-POST   /api/attendance/qr/        - QR attendance
-GET    /api/attendance/analytics/ - Attendance analytics
-```
-
-### Fee & Payment Endpoints
-```
-GET    /api/fees/                 - List fees
-POST   /api/fees/                 - Create fee
-GET    /api/payments/             - Payment history
-POST   /api/payments/khalti/      - Khalti payment
-POST   /api/payments/verify/      - Verify payment
-GET    /api/payments/receipt/{id}/- Download receipt
-```
-
-### Results Endpoints
-```
-GET    /api/results/              - List results
-POST   /api/results/              - Create result
-GET    /api/results/{id}/pdf/     - Download report card
-GET    /api/results/analytics/    - Result analytics
-```
-
-**Full API documentation available in `/docs/api/` directory**
-
----
-
-## 📱 Deployment Guide
-
-### PythonAnywhere Deployment
-
-1. **Create PythonAnywhere Account**
-   - Sign up at pythonanywhere.com
-   - Choose appropriate plan
-
-2. **Upload Code**
-   ```bash
-   git clone https://github.com/yourusername/smart-school-erp.git
-   cd smart-school-erp/backend
-   ```
-
-3. **Setup Virtual Environment**
-   ```bash
-   mkvirtualenv --python=/usr/bin/python3.10 school-erp
-   pip install -r requirements.txt
-   ```
-
-4. **Configure PostgreSQL**
-   - Create database in PythonAnywhere
-   - Update .env with database credentials
-
-5. **WSGI Configuration**
-   - Configure WSGI file (see deployment/wsgi.py)
-   - Set static files path
-   - Set media files path
-
-6. **Environment Variables**
-   ```bash
-   export SECRET_KEY='your-secret-key'
-   export DEBUG=False
-   export ALLOWED_HOSTS='yourdomain.pythonanywhere.com'
-   export DATABASE_URL='postgresql://...'
-   ```
-
-7. **Collect Static Files**
-   ```bash
-   python manage.py collectstatic --noinput
-   ```
-
-8. **Run Migrations**
-   ```bash
-   python manage.py migrate
-   ```
-
-9. **Reload Web App**
-   - Click "Reload" button in PythonAnywhere dashboard
-
-**Detailed deployment guide in `/docs/deployment.md`**
-
----
-
-## 🧪 Testing
-
-### Backend Testing
-```bash
-# Run all tests
-python manage.py test
-
-# Run specific app tests
-python manage.py test apps.students
-
-# Run with coverage
-coverage run --source='.' manage.py test
-coverage report
-```
-
-### API Testing with Postman
-- Import Postman collection from `/docs/postman/`
-- Configure environment variables
-- Run test suites
-
-### Frontend Testing
-```bash
-# Run tests
-npm test
-
-# Run with coverage
-npm test -- --coverage
-```
+Frontend will run at: http://localhost:3001
 
 ---
 
@@ -518,174 +158,241 @@ npm test -- --coverage
 smart-school-erp/
 ├── backend/
 │   ├── apps/
-│   │   ├── authentication/
-│   │   ├── students/
-│   │   ├── staff/
-│   │   ├── courses/
-│   │   ├── attendance/
-│   │   ├── fees/
-│   │   ├── results/
-│   │   ├── timetable/
-│   │   ├── assignments/
-│   │   ├── communication/
-│   │   ├── library/
-│   │   ├── events/
-│   │   └── leave/
+│   │   ├── authentication/      # JWT auth, user management
+│   │   ├── students/           # Student CRUD operations
+│   │   ├── staff/              # Staff management
+│   │   ├── attendance/         # Attendance tracking
+│   │   ├── fees/               # Fee management
+│   │   ├── results/            # Results & grades
+│   │   └── ...                 # Other modules
 │   ├── core/
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   └── wsgi.py
-│   ├── utils/
-│   ├── media/
-│   ├── static/
+│   │   ├── settings.py         # Django settings
+│   │   └── urls.py             # URL configuration
 │   ├── manage.py
-│   ├── requirements.txt
-│   └── .env.example
+│   └── db.sqlite3              # SQLite database
+│
 ├── frontend/
-│   ├── public/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── common/
-│   │   │   ├── dashboard/
-│   │   │   ├── students/
-│   │   │   ├── staff/
-│   │   │   ├── attendance/
-│   │   │   ├── fees/
-│   │   │   └── results/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── utils/
-│   │   ├── hooks/
-│   │   ├── context/
-│   │   ├── App.js
-│   │   └── index.js
-│   ├── package.json
-│   ├── tailwind.config.js
-│   └── .env.example
-├── docs/
-│   ├── api/
-│   ├── deployment/
-│   ├── erd/
-│   └── postman/
-├── deployment/
-│   ├── wsgi.py
-│   └── nginx.conf
-├── .gitignore
-├── README.md
-└── LICENSE
+│   │   │   ├── auth/           # Login component
+│   │   │   ├── dashboard/      # Dashboard with charts
+│   │   │   ├── students/       # Student pages (4 pages)
+│   │   │   ├── staff/          # Staff list page
+│   │   │   ├── attendance/     # Attendance page
+│   │   │   ├── fees/           # Fees page
+│   │   │   └── results/        # Results page
+│   │   ├── services/           # API services
+│   │   ├── context/            # Auth context
+│   │   └── App.js              # Main app component
+│   └── package.json
+│
+└── Documentation files
 ```
 
 ---
 
-## 🎯 Key Features Implemented
+## 🎯 API Endpoints
 
-✅ JWT Authentication with refresh tokens  
-✅ Role-based access control (Admin, Staff, Student)  
-✅ Student management with CSV import  
-✅ Staff management with department allocation  
-✅ Attendance system with QR code  
-✅ Fee management with Khalti payment gateway  
-✅ Result management with PDF report cards  
-✅ Timetable generation with conflict detection  
-✅ Assignment submission system  
-✅ Real-time communication  
-✅ Analytics dashboard with charts  
-✅ Library management  
-✅ Event calendar  
-✅ Leave management workflow  
-✅ AI-powered features  
-✅ Mobile-responsive design  
-✅ Dark/Light mode  
-✅ Email notifications  
-✅ PDF/Excel export  
-✅ Production-ready deployment  
+### Authentication
+```
+POST   /auth/login/              # Login
+POST   /auth/logout/             # Logout
+POST   /auth/token/refresh/      # Refresh token
+```
+
+### Students
+```
+GET    /students/students/       # List students
+POST   /students/students/       # Create student
+GET    /students/students/{id}/  # Get student
+PUT    /students/students/{id}/  # Update student
+DELETE /students/students/{id}/  # Delete student
+```
+
+### Staff
+```
+GET    /staff/staff/             # List staff
+POST   /staff/staff/             # Create staff
+GET    /staff/staff/{id}/        # Get staff details
+PUT    /staff/staff/{id}/        # Update staff
+DELETE /staff/staff/{id}/        # Delete staff
+```
+
+### Attendance
+```
+GET    /attendance/attendance/                    # List attendance
+POST   /attendance/attendance/                    # Mark attendance
+POST   /attendance/attendance/bulk_mark/          # Bulk mark
+GET    /attendance/attendance/statistics/         # Get statistics
+GET    /attendance/attendance/by_date/?date=...   # Get by date
+```
+
+### Fees
+```
+GET    /fees/structures/                  # List fee structures
+POST   /fees/structures/                  # Create structure
+GET    /fees/payments/                    # List payments
+POST   /fees/payments/                    # Create payment
+GET    /fees/payments/statistics/         # Get statistics
+POST   /fees/payments/{id}/make_payment/  # Make payment
+```
+
+### Results
+```
+GET    /results/exams/                           # List exams
+POST   /results/exams/                           # Create exam
+GET    /results/subjects/                        # List subjects
+POST   /results/subjects/                        # Create subject
+GET    /results/results/                         # List results
+POST   /results/results/                         # Create result
+GET    /results/results/statistics/?exam={id}   # Get statistics
+GET    /results/results/student_report/         # Get report card
+```
 
 ---
 
-## 🏆 Premium Features
+## 🎨 Screenshots
 
-- Face recognition attendance
-- QR code student ID generation
-- Parent portal access
-- GPS-enabled bus tracking
-- Digital ID cards
-- Smart announcements
-- Voice notifications
-- Multi-language support
-- Cloud backup system
-- Comprehensive audit logs
-- Activity tracking
-- Biometric login integration
+### Dashboard
+Professional ERP-style dashboard with:
+- Statistics cards
+- Interactive charts (Recharts)
+- Weekly timetable
+- Upcoming events
+- Recent activity feed
+- Quick action buttons
+
+### Students Management
+- Comprehensive list view with search/filter
+- Detailed student profiles
+- Add/Edit forms with validation
+- Photo upload support
+
+### Other Modules
+- Staff list with department filtering
+- Attendance tracking with date selector
+- Fee management with statistics
+- Results with automatic grade calculation
 
 ---
 
-## 📈 Performance Optimization
+## 🔐 Security Features
 
-- Database query optimization (select_related, prefetch_related)
-- Redis caching for frequently accessed data
-- Lazy loading for images
-- Code splitting in React
-- Gzip compression
-- CDN for static files
-- Database indexing
-- API response pagination
-- Debounced search inputs
+- JWT authentication
+- Token-based authorization
+- Protected API endpoints
+- CORS configuration
+- Password hashing
+- Session management
+
+---
+
+## 📝 Database Models
+
+### Students
+- Personal information
+- Contact details
+- Academic information
+- Parent/Guardian details
+
+### Staff
+- Employee information
+- Department & designation
+- Salary details
+- Contact information
+
+### Attendance
+- Student reference
+- Date & status
+- Remarks
+- Marked by
+
+### Fees
+- Fee structure (grade-wise)
+- Payment tracking
+- Transaction details
+- Payment status
+
+### Results
+- Exam details
+- Subject information
+- Student results
+- Automatic grade calculation
+
+---
+
+## 🚧 Upcoming Features
+
+### In Development
+- Add/Edit forms for Staff, Attendance, Fees, Results
+- Khalti payment gateway integration
+- QR code attendance scanning
+- PDF report card generation
+
+### Planned Modules
+- Courses Management
+- Timetable
+- Assignments
+- Communication/Messages
+- Library
+- Events
+- Leave Management
+- Advanced Analytics
 
 ---
 
 ## 🤝 Contributing
 
-This project reflects real internship experience and follows professional development standards.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Development Workflow
-1. Create feature branch from `develop`
-2. Follow coding standards
-3. Write tests for new features
-4. Update documentation
-5. Submit pull request
-6. Code review process
-7. Merge to develop
-8. Deploy to staging
-9. Test in staging
-10. Merge to main & deploy to production
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-## 📝 License
+## 📄 License
 
-MIT License - See LICENSE file for details
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
 ## 👨‍💻 Developer
 
-**Full-Stack Developer Intern**  
-Code IT, Dharan, Nepal  
-Django & React Specialist
+**Ayush (mundre1)**
+- GitHub: [@Mundre1](https://github.com/Mundre1)
+- Email: gymnasticaayush123@gmail.com
+
+---
+
+## 🙏 Acknowledgments
+
+Built as part of Django & React Full-Stack development learning, reflecting real-world ERP system architecture and best practices.
 
 ---
 
 ## 📞 Support
 
-For issues and questions:
-- Create GitHub issue
-- Email: support@smartschoolerp.com
-- Documentation: /docs/
+For support, email gymnasticaayush123@gmail.com or open an issue in the repository.
 
 ---
 
-## 🎓 Acknowledgments
+## 📚 Documentation
 
-This project was developed during my internship at Code IT, Dharan, Nepal, where I gained hands-on experience in:
-- Django REST Framework development
-- React.js frontend development
-- PostgreSQL database design
-- JWT authentication implementation
-- Payment gateway integration
-- Production deployment on PythonAnywhere
-- Agile development methodology
-- Professional coding standards
+Detailed documentation available in:
+- `FINAL_STATUS.md` - Complete system overview
+- `ALL_MODULES_COMPLETE.md` - Module details
+- `QUICK_REFERENCE.md` - Quick access guide
+- `CURRENT_STATE.md` - Current progress
 
 ---
 
-**Built with ❤️ using Django REST Framework & React.js**
+**⭐ Star this repository if you find it helpful!**
+
+---
+
+**Last Updated:** May 27, 2026  
+**Status:** ✅ Live and Running  
+**Progress:** 55% Complete
