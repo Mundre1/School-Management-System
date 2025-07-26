@@ -1,6 +1,6 @@
-# Smart School ERP System
+# Itahari International School Management System
 
-Full-stack School Management System
+Complete Professional School Management System
 
 ## Structure
 
