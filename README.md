@@ -6,6 +6,8 @@ A comprehensive School Management System built with Django REST Framework and Re
 ![Backend](https://img.shields.io/badge/Backend-Django-green)
 ![Frontend](https://img.shields.io/badge/Frontend-React-blue)
 ![Database](https://img.shields.io/badge/Database-SQLite-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Version](https://img.shields.io/badge/Version-0.5.0-purple)
 
 ## 🚀 Live Demo
 
