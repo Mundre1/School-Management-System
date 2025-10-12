@@ -1,0 +1,33 @@
+SMART SCHOOL ERP SYSTEM
+=======================
+
+STATUS: ✅ RUNNING
+
+SERVERS:
+- Backend:  http://localhost:8000 (Django REST API)
+- Frontend: http://localhost:3001 (React App)
+- Admin:    http://localhost:8000/admin
+
+LOGIN:
+- Email:    admin@school.com
+- Password: admin123
+
+FEATURES:
+✅ Authentication & JWT
+✅ Students Management (Full CRUD)
+✅ Staff Management
+✅ Attendance Tracking
+✅ Fee Management
+✅ Results Management
+✅ Dashboard with Charts
+
+TECH STACK:
+- Backend:  Django 4.2.7 + DRF + SQLite
+- Frontend: React.js + React Router + Recharts
+
+TO RUN:
+./run.sh
+
+OR MANUALLY:
+Backend:  cd backend && source venv/bin/activate && python manage.py runserver
+Frontend: cd frontend && PORT=3001 npm start
