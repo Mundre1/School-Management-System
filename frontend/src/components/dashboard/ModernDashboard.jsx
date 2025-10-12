@@ -43,54 +43,54 @@ const ModernDashboard = () => {
 
   const [loading, setLoading] = useState(true);
 
-  // Monthly attendance data
+  // Monthly attendance data (Nepali months)
   const attendanceData = [
-    { month: 'Jan', students: 92, teachers: 95 },
-    { month: 'Feb', students: 88, teachers: 93 },
-    { month: 'Mar', students: 95, teachers: 97 },
-    { month: 'Apr', students: 90, teachers: 94 },
-    { month: 'May', students: 93, teachers: 96 },
-    { month: 'Jun', students: 89, teachers: 92 },
+    { month: 'Baisakh', students: 92, teachers: 95 },
+    { month: 'Jestha', students: 88, teachers: 93 },
+    { month: 'Ashar', students: 95, teachers: 97 },
+    { month: 'Shrawan', students: 90, teachers: 94 },
+    { month: 'Bhadra', students: 93, teachers: 96 },
+    { month: 'Ashwin', students: 89, teachers: 92 },
   ];
 
-  // Revenue data
+  // Revenue data (in NPR)
   const revenueData = [
-    { month: 'Jan', amount: 45000 },
-    { month: 'Feb', amount: 52000 },
-    { month: 'Mar', amount: 48000 },
-    { month: 'Apr', amount: 61000 },
-    { month: 'May', amount: 55000 },
-    { month: 'Jun', amount: 58000 },
+    { month: 'Baisakh', amount: 450000 },
+    { month: 'Jestha', amount: 520000 },
+    { month: 'Ashar', amount: 480000 },
+    { month: 'Shrawan', amount: 610000 },
+    { month: 'Bhadra', amount: 550000 },
+    { month: 'Ashwin', amount: 580000 },
   ];
 
-  // Class distribution
+  // Class distribution (Nepali school system)
   const classData = [
-    { name: 'Grade 1-3', value: 280, color: '#3b82f6' },
-    { name: 'Grade 4-6', value: 320, color: '#8b5cf6' },
-    { name: 'Grade 7-9', value: 290, color: '#ec4899' },
-    { name: 'Grade 10-12', value: 250, color: '#f59e0b' },
+    { name: 'Class 1-5', value: 280, color: '#3b82f6' },
+    { name: 'Class 6-8', value: 320, color: '#8b5cf6' },
+    { name: 'Class 9-10 (SEE)', value: 290, color: '#ec4899' },
+    { name: 'Class 11-12 (+2)', value: 250, color: '#f59e0b' },
   ];
 
   // Recent activities
   const recentActivities = [
-    { id: 1, type: 'exam', title: 'Mid-term Exam Schedule Released', time: '2 hours ago', icon: FaFileAlt, color: 'text-blue-600' },
-    { id: 2, type: 'notice', title: 'Parent-Teacher Meeting on Friday', time: '5 hours ago', icon: FaBullhorn, color: 'text-purple-600' },
-    { id: 3, type: 'result', title: 'Grade 10 Results Published', time: '1 day ago', icon: FaTrophy, color: 'text-green-600' },
-    { id: 4, type: 'fee', title: 'Fee Payment Reminder Sent', time: '2 days ago', icon: FaMoneyBillWave, color: 'text-orange-600' },
+    { id: 1, type: 'exam', title: 'Terminal Exam Schedule Released', time: '2 hours ago', icon: FaFileAlt, color: 'text-blue-600' },
+    { id: 2, type: 'notice', title: 'Dashain Holiday Notice', time: '5 hours ago', icon: FaBullhorn, color: 'text-purple-600' },
+    { id: 3, type: 'result', title: 'Class 10 SEE Results Published', time: '1 day ago', icon: FaTrophy, color: 'text-green-600' },
+    { id: 4, type: 'fee', title: 'Monthly Fee Payment Reminder', time: '2 days ago', icon: FaMoneyBillWave, color: 'text-orange-600' },
   ];
 
   // Upcoming events
   const upcomingEvents = [
-    { id: 1, title: 'Annual Sports Day', date: 'Oct 15, 2025', type: 'Sports' },
-    { id: 2, title: 'Science Exhibition', date: 'Oct 20, 2025', type: 'Academic' },
-    { id: 3, title: 'Cultural Program', date: 'Oct 25, 2025', type: 'Cultural' },
+    { id: 1, title: 'Annual Sports Day', date: 'Kartik 15, 2082', type: 'Sports' },
+    { id: 2, title: 'Science Exhibition', date: 'Kartik 20, 2082', type: 'Academic' },
+    { id: 3, title: 'Tihar Celebration', date: 'Kartik 25, 2082', type: 'Cultural' },
   ];
 
-  // Top performers
+  // Top performers (Nepali students)
   const topPerformers = [
-    { name: 'Rajesh Kumar', class: 'Grade 10', percentage: 98.5, avatar: 'RK' },
-    { name: 'Priya Sharma', class: 'Grade 12', percentage: 97.8, avatar: 'PS' },
-    { name: 'Amit Thapa', class: 'Grade 9', percentage: 96.2, avatar: 'AT' },
+    { name: 'Suman Adhikari', class: 'Class 10', percentage: 98.5, avatar: 'SA' },
+    { name: 'Anjali Shrestha', class: 'Class 12', percentage: 97.8, avatar: 'AS' },
+    { name: 'Bikash Tamang', class: 'Class 9', percentage: 96.2, avatar: 'BT' },
   ];
 
   useEffect(() => {
@@ -116,7 +116,7 @@ const ModernDashboard = () => {
         totalStudents,
         totalTeachers: totalStaff,
         presentToday,
-        totalRevenue: 58000,
+        totalRevenue: 580000, // NPR
         pendingFees: 12,
         upcomingExams: 3,
       });
@@ -347,7 +347,7 @@ const ModernDashboard = () => {
                 <span className="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">+8%</span>
               </div>
               <p className="text-orange-100 text-sm mb-1">Total Revenue</p>
-              <p className="text-4xl font-bold">${(stats.totalRevenue / 1000).toFixed(1)}k</p>
+              <p className="text-4xl font-bold">NPR {(stats.totalRevenue / 1000).toFixed(0)}k</p>
               <p className="text-xs text-orange-100 mt-2">This month</p>
             </div>
           </div>
