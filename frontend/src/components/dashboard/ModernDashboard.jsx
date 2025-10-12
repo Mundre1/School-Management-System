@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import api from '../../services/api';
 import { 
   FaUserGraduate, 
   FaChalkboardTeacher, 
   FaUsers, 
-  FaMoneyBillWave, 
-  FaSearch, 
-  FaBell, 
-  FaCog, 
-  FaSignOutAlt, 
-  FaBook, 
-  FaClipboardCheck, 
-  FaCalendarAlt, 
-  FaWallet,
-  FaGraduationCap,
+  FaSchool,
   FaChartLine,
-  FaUserCheck,
-  FaFileAlt,
+  FaCalendarAlt,
   FaTrophy,
-  FaBullhorn,
-  FaPlus,
-  FaDownload,
-  FaUpload,
-  FaPrint
+  FaClipboardList,
+  FaSignOutAlt
 } from 'react-icons/fa';
 
 const ModernDashboard = () => {
@@ -33,64 +20,61 @@ const ModernDashboard = () => {
   const navigate = useNavigate();
   
   const [stats, setStats] = useState({
-    totalStudents: 0,
-    totalTeachers: 0,
-    presentToday: 0,
-    totalRevenue: 0,
-    pendingFees: 0,
-    upcomingExams: 0,
+    schools: 69,
+    teachers: 88,
+    students: 90,
+    parents: 128,
   });
 
   const [loading, setLoading] = useState(true);
 
-  // Monthly attendance data (Nepali months)
+  // Calendar attendance data
   const attendanceData = [
-    { month: 'Baisakh', students: 92, teachers: 95 },
-    { month: 'Jestha', students: 88, teachers: 93 },
-    { month: 'Ashar', students: 95, teachers: 97 },
-    { month: 'Shrawan', students: 90, teachers: 94 },
-    { month: 'Bhadra', students: 93, teachers: 96 },
-    { month: 'Ashwin', students: 89, teachers: 92 },
+    { year: '2019', value: 20 },
+    { year: '2020', value: 40 },
+    { year: '2021', value: 80 },
+    { year: '2022', value: 60 },
+    { year: '2023', value: 70 },
+    { year: '2024', value: 50 },
+    { year: '2025', value: 90 },
+    { year: '2026', value: 75 },
   ];
 
-  // Revenue data (in NPR)
-  const revenueData = [
-    { month: 'Baisakh', amount: 450000 },
-    { month: 'Jestha', amount: 520000 },
-    { month: 'Ashar', amount: 480000 },
-    { month: 'Shrawan', amount: 610000 },
-    { month: 'Bhadra', amount: 550000 },
-    { month: 'Ashwin', amount: 580000 },
+  // Educational stages
+  const educationalStages = [
+    { name: 'Primary School', count: 90, color: '#7c3aed' },
+    { name: 'Elementary School', count: 145, color: '#fbbf24' },
+    { name: 'Preschool', count: 88, color: '#10b981' },
   ];
 
-  // Class distribution (Nepali school system)
-  const classData = [
-    { name: 'Class 1-5', value: 280, color: '#3b82f6' },
-    { name: 'Class 6-8', value: 320, color: '#8b5cf6' },
-    { name: 'Class 9-10 (SEE)', value: 290, color: '#ec4899' },
-    { name: 'Class 11-12 (+2)', value: 250, color: '#f59e0b' },
+  // Top students
+  const topStudents = [
+    { name: 'Rowan Hossam', percentage: 99.88, rank: '1st', color: 'bg-green-500' },
+    { name: 'Rony Beyablo', percentage: 98.17, rank: '2nd', color: 'bg-purple-600' },
+    { name: 'Adam Hossam', percentage: 97.32, rank: '3rd', color: 'bg-yellow-500' },
   ];
 
-  // Recent activities
-  const recentActivities = [
-    { id: 1, type: 'exam', title: 'Terminal Exam Schedule Released', time: '2 hours ago', icon: FaFileAlt, color: 'text-blue-600' },
-    { id: 2, type: 'notice', title: 'Dashain Holiday Notice', time: '5 hours ago', icon: FaBullhorn, color: 'text-purple-600' },
-    { id: 3, type: 'result', title: 'Class 10 SEE Results Published', time: '1 day ago', icon: FaTrophy, color: 'text-green-600' },
-    { id: 4, type: 'fee', title: 'Monthly Fee Payment Reminder', time: '2 days ago', icon: FaMoneyBillWave, color: 'text-orange-600' },
+  // Calendar months
+  const months = [
+    { name: 'January', color: 'bg-white' },
+    { name: 'February', color: 'bg-orange-400' },
+    { name: 'March', color: 'bg-yellow-400' },
+    { name: 'April', color: 'bg-green-500' },
+    { name: 'May', color: 'bg-orange-400' },
+    { name: 'June', color: 'bg-yellow-400' },
+    { name: 'July', color: 'bg-white' },
+    { name: 'August', color: 'bg-orange-400' },
+    { name: 'September', color: 'bg-yellow-400' },
+    { name: 'October', color: 'bg-orange-400' },
+    { name: 'November', color: 'bg-orange-400' },
+    { name: 'December', color: 'bg-yellow-400' },
   ];
 
-  // Upcoming events
-  const upcomingEvents = [
-    { id: 1, title: 'Annual Sports Day', date: 'Kartik 15, 2082', type: 'Sports' },
-    { id: 2, title: 'Science Exhibition', date: 'Kartik 20, 2082', type: 'Academic' },
-    { id: 3, title: 'Tihar Celebration', date: 'Kartik 25, 2082', type: 'Cultural' },
-  ];
-
-  // Top performers (Nepali students)
-  const topPerformers = [
-    { name: 'Suman Adhikari', class: 'Class 10', percentage: 98.5, avatar: 'SA' },
-    { name: 'Anjali Shrestha', class: 'Class 12', percentage: 97.8, avatar: 'AS' },
-    { name: 'Bikash Tamang', class: 'Class 9', percentage: 96.2, avatar: 'BT' },
+  // Activities
+  const activities = [
+    'Elimination Game',
+    'Freshman Orientation',
+    'Spring Sports Rally',
   ];
 
   useEffect(() => {
@@ -100,27 +84,11 @@ const ModernDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      
-      // Fetch students
-      const studentsRes = await api.get('/students/students/');
-      const totalStudents = studentsRes.data.count || studentsRes.data.results?.length || 0;
-      
-      // Fetch staff
-      const staffRes = await api.get('/staff/staff/');
-      const totalStaff = staffRes.data.count || staffRes.data.results?.length || 0;
-      
-      // Calculate attendance
-      const presentToday = Math.floor(totalStudents * 0.92);
-      
-      setStats({
-        totalStudents,
-        totalTeachers: totalStaff,
-        presentToday,
-        totalRevenue: 580000, // NPR
-        pendingFees: 12,
-        upcomingExams: 3,
-      });
-      
+      const response = await api.get('/students/students/');
+      setStats(prev => ({
+        ...prev,
+        students: response.data.count || 90,
+      }));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
@@ -133,326 +101,197 @@ const ModernDashboard = () => {
     navigate('/login');
   };
 
-  const attendancePercentage = stats.totalStudents > 0 
-    ? ((stats.presentToday / stats.totalStudents) * 100).toFixed(1) 
-    : 0;
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-700 font-semibold">Loading Dashboard...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="w-64 bg-gradient-to-b from-indigo-900 via-blue-900 to-indigo-800 text-white shadow-2xl">
+      <div className="w-48 bg-gradient-to-b from-purple-900 to-purple-700 text-white shadow-xl">
         <div className="p-6">
           {/* Logo */}
-          <div className="mb-8 text-center">
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-              <FaGraduationCap className="text-indigo-900 text-3xl" />
+          <div className="mb-8 flex flex-col items-center">
+            <div className="w-16 h-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+              <div className="text-white text-3xl font-bold">IL</div>
             </div>
-            <h2 className="text-xl font-bold">Itahari International</h2>
-            <p className="text-blue-200 text-xs mt-1">School Management</p>
           </div>
           
           {/* Navigation */}
-          <nav className="space-y-1">
-            <button className="w-full text-left px-4 py-3 rounded-xl bg-white bg-opacity-20 backdrop-blur-sm font-semibold transition flex items-center space-x-3 shadow-lg">
-              <FaChartLine className="text-lg" />
+          <nav className="space-y-2">
+            <button className="w-full text-left px-4 py-3 rounded-lg bg-purple-800 font-semibold transition flex items-center space-x-3">
+              <FaChartLine />
               <span>Dashboard</span>
             </button>
             <button 
               onClick={() => navigate('/students')}
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition flex items-center space-x-3"
             >
-              <FaUserGraduate className="text-lg" />
+              <FaUserGraduate />
               <span>Students</span>
             </button>
             <button 
               onClick={() => navigate('/staff')}
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition flex items-center space-x-3"
             >
-              <FaChalkboardTeacher className="text-lg" />
+              <FaChalkboardTeacher />
               <span>Teachers</span>
             </button>
-            <button 
-              onClick={() => navigate('/attendance')}
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
-            >
-              <FaUserCheck className="text-lg" />
-              <span>Attendance</span>
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition flex items-center space-x-3">
+              <FaUsers />
+              <span>Parents</span>
             </button>
-            <button 
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
-            >
-              <FaBook className="text-lg" />
-              <span>Courses</span>
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition flex items-center space-x-3">
+              <FaCalendarAlt />
+              <span>Events</span>
             </button>
-            <button 
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
-            >
-              <FaFileAlt className="text-lg" />
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition flex items-center space-x-3">
+              <FaClipboardList />
               <span>Exams</span>
             </button>
-            <button 
-              onClick={() => navigate('/fees')}
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
-            >
-              <FaWallet className="text-lg" />
-              <span>Fees</span>
-            </button>
-            <button 
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3"
-            >
-              <FaCalendarAlt className="text-lg" />
-              <span>Events</span>
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition flex items-center space-x-3">
+              <FaTrophy />
+              <span>Assignment</span>
             </button>
           </nav>
         </div>
 
-        {/* Bottom Actions */}
-        <div className="absolute bottom-6 left-6 right-6 space-y-2">
-          <button className="w-full text-left px-4 py-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition flex items-center space-x-3">
-            <FaCog className="text-lg" />
-            <span>Settings</span>
-          </button>
+        {/* Logout */}
+        <div className="absolute bottom-8 left-6 right-6">
           <button
             onClick={handleLogout}
-            className="w-full text-left px-4 py-3 rounded-xl bg-red-500 hover:bg-red-600 transition flex items-center space-x-3 font-semibold shadow-lg"
+            className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition flex items-center justify-center space-x-2"
           >
-            <FaSignOutAlt className="text-lg" />
+            <FaSignOutAlt />
             <span>Logout</span>
           </button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto bg-gray-50">
         {/* Header */}
-        <div className="bg-white border-b shadow-sm px-8 py-4 sticky top-0 z-10">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">Welcome back, {user?.first_name}! 👋</h1>
-              <p className="text-sm text-gray-600 mt-1">Here's what's happening with your school today</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              {/* Search */}
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <FaSearch className="absolute left-3 top-3 text-gray-400" />
-              </div>
-              
-              {/* Notifications */}
-              <button className="relative p-2 hover:bg-gray-100 rounded-lg transition">
-                <FaBell className="text-2xl text-gray-600" />
-                <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 rounded-full text-white text-xs flex items-center justify-center font-bold">
-                  5
-                </span>
-              </button>
-              
-              {/* User Profile */}
-              <div className="flex items-center space-x-3 pl-4 border-l">
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-gray-800">{user?.first_name} {user?.last_name}</p>
-                  <p className="text-xs text-gray-500 capitalize">{user?.role || 'Administrator'}</p>
-                </div>
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                  {user?.first_name?.charAt(0)}{user?.last_name?.charAt(0)}
-                </div>
-              </div>
+        <div className="bg-white px-8 py-4 flex justify-between items-center shadow-sm">
+          <div>
+            <h1 className="text-xl font-bold text-gray-800">Welcome to Itahari International School</h1>
+            <p className="text-sm text-gray-500">School Year 2025 - 2026</p>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="text-right">
+              <p className="text-sm font-semibold">{user?.first_name} {user?.last_name}</p>
+              <p className="text-xs text-gray-500">{user?.role}</p>
             </div>
           </div>
         </div>
 
-        {/* Dashboard Content */}
+        {/* Stats Cards */}
         <div className="p-8">
-          {/* Quick Actions */}
-          <div className="mb-6 flex space-x-3">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center space-x-2 shadow-md">
-              <FaPlus />
-              <span>Add Student</span>
-            </button>
-            <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition flex items-center space-x-2 shadow-md">
-              <FaUpload />
-              <span>Import Data</span>
-            </button>
-            <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center space-x-2 shadow-md">
-              <FaDownload />
-              <span>Export Report</span>
-            </button>
-            <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition flex items-center space-x-2 shadow-md">
-              <FaPrint />
-              <span>Print</span>
-            </button>
-          </div>
-
-          {/* Stats Cards */}
           <div className="grid grid-cols-4 gap-6 mb-8">
-            {/* Total Students */}
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 shadow-xl text-white transform hover:scale-105 transition cursor-pointer">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-white bg-opacity-30 rounded-xl flex items-center justify-center">
-                  <FaUserGraduate className="text-2xl" />
+            {/* Schools Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-400">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm mb-2">Schools</p>
+                  <p className="text-4xl font-bold text-gray-800">{stats.schools}</p>
                 </div>
-                <span className="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">+12%</span>
+                <FaSchool className="text-5xl text-red-400" />
               </div>
-              <p className="text-blue-100 text-sm mb-1">Total Students</p>
-              <p className="text-4xl font-bold">{stats.totalStudents}</p>
-              <p className="text-xs text-blue-100 mt-2">Enrolled this year</p>
             </div>
 
-            {/* Total Teachers */}
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 shadow-xl text-white transform hover:scale-105 transition cursor-pointer">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-white bg-opacity-30 rounded-xl flex items-center justify-center">
-                  <FaChalkboardTeacher className="text-2xl" />
+            {/* Teachers Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-blue-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm mb-2">Teachers</p>
+                  <p className="text-4xl font-bold text-gray-800">{stats.teachers}</p>
                 </div>
-                <span className="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">+5%</span>
+                <FaChalkboardTeacher className="text-5xl text-blue-500" />
               </div>
-              <p className="text-purple-100 text-sm mb-1">Total Teachers</p>
-              <p className="text-4xl font-bold">{stats.totalTeachers}</p>
-              <p className="text-xs text-purple-100 mt-2">Active staff members</p>
             </div>
 
-            {/* Attendance Today */}
-            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 shadow-xl text-white transform hover:scale-105 transition cursor-pointer">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-white bg-opacity-30 rounded-xl flex items-center justify-center">
-                  <FaUserCheck className="text-2xl" />
+            {/* Students Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-yellow-400">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm mb-2">Students</p>
+                  <p className="text-4xl font-bold text-gray-800">{stats.students}</p>
                 </div>
-                <span className="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">{attendancePercentage}%</span>
+                <FaUserGraduate className="text-5xl text-yellow-400" />
               </div>
-              <p className="text-green-100 text-sm mb-1">Present Today</p>
-              <p className="text-4xl font-bold">{stats.presentToday}</p>
-              <p className="text-xs text-green-100 mt-2">Out of {stats.totalStudents} students</p>
             </div>
 
-            {/* Total Revenue */}
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 shadow-xl text-white transform hover:scale-105 transition cursor-pointer">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-white bg-opacity-30 rounded-xl flex items-center justify-center">
-                  <FaMoneyBillWave className="text-2xl" />
+            {/* Parents Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-500">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-500 text-sm mb-2">Parents</p>
+                  <p className="text-4xl font-bold text-gray-800">{stats.parents}</p>
                 </div>
-                <span className="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">+8%</span>
+                <FaUsers className="text-5xl text-green-500" />
               </div>
-              <p className="text-orange-100 text-sm mb-1">Total Revenue</p>
-              <p className="text-4xl font-bold">NPR {(stats.totalRevenue / 1000).toFixed(0)}k</p>
-              <p className="text-xs text-orange-100 mt-2">This month</p>
             </div>
           </div>
 
           {/* Charts Section */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            {/* Attendance Trend */}
-            <div className="col-span-2 bg-white rounded-2xl p-6 shadow-lg">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-gray-800">Attendance Trend</h3>
-                  <p className="text-sm text-gray-500">Monthly attendance overview</p>
-                </div>
-                <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option>Last 6 Months</option>
-                  <option>Last Year</option>
-                  <option>All Time</option>
-                </select>
-              </div>
-              <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={attendanceData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="month" stroke="#888" />
-                  <YAxis stroke="#888" />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="students" stroke="#3b82f6" strokeWidth={3} dot={{ r: 5 }} name="Students" />
-                  <Line type="monotone" dataKey="teachers" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 5 }} name="Teachers" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Class Distribution */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Class Distribution</h3>
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            {/* Calendar Attendance */}
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Calendar Attendance</h3>
               <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie
-                    data={classData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {classData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
+                <BarChart data={attendanceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="year" />
+                  <YAxis />
                   <Tooltip />
-                </PieChart>
+                  <Bar dataKey="value" fill="#7c3aed" radius={[8, 8, 0, 0]} />
+                </BarChart>
               </ResponsiveContainer>
-              <div className="mt-4 space-y-2">
-                {classData.map((item, index) => (
-                  <div key={index} className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                      <span className="text-sm text-gray-700">{item.name}</span>
-                    </div>
-                    <span className="text-sm font-semibold text-gray-800">{item.value}</span>
+              
+              <div className="grid grid-cols-4 gap-2 mt-4">
+                {months.map((month, index) => (
+                  <div key={index} className={`${month.color} p-2 rounded text-center text-xs font-medium border border-gray-200`}>
+                    {month.name}
                   </div>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Revenue Chart */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            <div className="col-span-2 bg-white rounded-2xl p-6 shadow-lg">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-gray-800">Revenue Overview</h3>
-                  <p className="text-sm text-gray-500">Monthly fee collection</p>
-                </div>
+            {/* Educational Stage */}
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-bold text-gray-800">Educational stage</h3>
+                <p className="text-xs text-gray-400">All data in Thousand 2021 - 2022</p>
               </div>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={revenueData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="month" stroke="#888" />
-                  <YAxis stroke="#888" />
-                  <Tooltip />
-                  <Bar dataKey="amount" fill="#3b82f6" radius={[8, 8, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Top Performers */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Top Performers</h3>
+              
               <div className="space-y-4">
-                {topPerformers.map((student, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition cursor-pointer">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                      {student.avatar}
+                {educationalStages.map((stage, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: stage.color }}></div>
+                      <span className="text-sm text-gray-700">{stage.name}</span>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-800">{student.name}</p>
-                      <p className="text-xs text-gray-500">{student.class}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg font-bold text-green-600">{student.percentage}%</p>
-                      <p className="text-xs text-gray-500">Score</p>
-                    </div>
+                    <span className="text-lg font-bold text-gray-800">{stage.count}</span>
                   </div>
+                ))}
+              </div>
+
+              <div className="mt-6 h-40 flex items-end justify-around gap-4">
+                {educationalStages.map((stage, index) => (
+                  <div
+                    key={index}
+                    className="flex-1 rounded-t-lg"
+                    style={{
+                      backgroundColor: stage.color,
+                      height: `${(stage.count / 145) * 100}%`,
+                    }}
+                  ></div>
                 ))}
               </div>
             </div>
@@ -460,44 +299,38 @@ const ModernDashboard = () => {
 
           {/* Bottom Section */}
           <div className="grid grid-cols-2 gap-6">
-            {/* Recent Activities */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
+            {/* Activities & Events */}
+            <div className="bg-white rounded-xl p-6 shadow-sm">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Recent Activities</h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 font-semibold">View All</button>
+                <h3 className="text-lg font-bold text-gray-800">Activities & Events</h3>
+                <button className="text-sm text-green-600 border border-green-600 px-4 py-1 rounded-full hover:bg-green-50">
+                  View All
+                </button>
               </div>
+              
               <div className="space-y-3">
-                {recentActivities.map((activity) => (
-                  <div key={activity.id} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-xl transition cursor-pointer">
-                    <div className={`w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center ${activity.color}`}>
-                      <activity.icon className="text-lg" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-800">{activity.title}</p>
-                      <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
-                    </div>
+                {activities.map((activity, index) => (
+                  <div key={index} className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+                    <p className="text-sm text-gray-700">{activity}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Upcoming Events */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Upcoming Events</h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700 font-semibold">View Calendar</button>
-              </div>
-              <div className="space-y-3">
-                {upcomingEvents.map((event) => (
-                  <div key={event.id} className="p-4 border-l-4 border-blue-500 bg-blue-50 rounded-lg hover:bg-blue-100 transition cursor-pointer">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-sm font-semibold text-gray-800">{event.title}</p>
-                        <p className="text-xs text-gray-600 mt-1">{event.date}</p>
-                      </div>
-                      <span className="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded-full font-semibold">
-                        {event.type}
-                      </span>
+            {/* Top Students */}
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Top Students</h3>
+              
+              <div className="grid grid-cols-3 gap-4">
+                {topStudents.map((student, index) => (
+                  <div key={index} className={`${student.color} rounded-xl p-4 text-white text-center`}>
+                    <div className="w-16 h-16 bg-white bg-opacity-30 rounded-full mx-auto mb-2 flex items-center justify-center">
+                      <FaUserGraduate className="text-2xl" />
+                    </div>
+                    <p className="font-semibold text-sm mb-1">{student.name}</p>
+                    <p className="text-2xl font-bold mb-1">{student.percentage}%</p>
+                    <div className="bg-white bg-opacity-30 rounded-full px-3 py-1 text-xs font-medium">
+                      {student.rank}
                     </div>
                   </div>
                 ))}
