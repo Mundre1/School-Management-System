@@ -1,0 +1,23 @@
+{
+  "name": "itahari-international-school-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Itahari International School Management System",
+  "main": "manage.py",
+  "scripts": {
+    "dev": "python3 manage.py runserver",
+    "start": "python3 manage.py runserver",
+    "migrate": "python3 manage.py migrate",
+    "makemigrations": "python3 manage.py makemigrations",
+    "createsuperuser": "python3 manage.py createsuperuser",
+    "collectstatic": "python3 manage.py collectstatic --noinput",
+    "shell": "python3 manage.py shell"
+  },
+  "keywords": [
+    "django",
+    "school-management",
+    "education",
+    "erp"
+  ],
+  "author": "Itahari International School",
+  "license": "MIT"
+}
