@@ -1,63 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import api from '../../services/api';
-import { FaSchool, FaChalkboardTeacher, FaUserGraduate, FaUsers } from 'react-icons/fa';
+import { 
+  FaUserGraduate, 
+  FaChalkboardTeacher, 
+  FaUsers, 
+  FaMoneyBillWave, 
+  FaSearch, 
+  FaBell, 
+  FaCog, 
+  FaSignOutAlt, 
+  FaBook, 
+  FaClipboardCheck, 
+  FaCalendarAlt, 
+  FaWallet,
+  FaGraduationCap 
+} from 'react-icons/fa';
 
 const ModernDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  
   const [stats, setStats] = useState({
-    schools: 69,
-    teachers: 88,
-    students: 90,
-    parents: 128,
+    students: 12478,
+    teachers: 478,
+    parents: 8908,
+    earnings: 42800,
   });
 
-  const attendanceData = [
-    { year: '2019', value: 20 },
-    { year: '2020', value: 40 },
-    { year: '2021', value: 80 },
-    { year: '2022', value: 60 },
-    { year: '2023', value: 70 },
-    { year: '2024', value: 50 },
-    { year: '2025', value: 90 },
-    { year: '2026', value: 75 },
+  const [loading, setLoading] = useState(true);
+
+  // Total Earnings Data (Monthly)
+  const earningsData = [
+    { month: 'Jan', earnings: 35000, expense: 25000 },
+    { month: 'Feb', earnings: 28000, expense: 22000 },
+    { month: 'Mar', earnings: 32000, expense: 24000 },
+    { month: 'Apr', earnings: 38000, expense: 26000 },
+    { month: 'May', earnings: 25000, expense: 20000 },
+    { month: 'Jun', earnings: 30000, expense: 23000 },
+    { month: 'Jul', earnings: 42000, expense: 28000 },
+    { month: 'Aug', earnings: 35000, expense: 25000 },
+    { month: 'Sep', earnings: 28000, expense: 22000 },
+    { month: 'Oct', earnings: 32000, expense: 24000 },
+    { month: 'Nov', earnings: 30000, expense: 23000 },
+    { month: 'Dec', earnings: 35000, expense: 25000 },
   ];
 
-  const educationalStages = [
-    { name: 'Primary School', count: 90, color: '#7c3aed' },
-    { name: 'Elementary School', count: 145, color: '#fbbf24' },
-    { name: 'Preschool', count: 88, color: '#10b981' },
+  // Top Performers
+  const topPerformers = [
+    { name: 'Enes Schirrel', id: '4278', class: '6th Class', percentage: 98.82 },
+    { name: 'Cayla Bergnaum', id: '3347', class: '8th Class', percentage: 98.72 },
+    { name: 'Kathryn Hahn', id: '3943', class: '5th Class', percentage: 97.50 },
   ];
 
-  const topStudents = [
-    { name: 'Rowan Hossam', percentage: 99.88, rank: '1st', color: 'bg-green-500', image: '👨‍🎓' },
-    { name: 'Rony Beyablo', percentage: 98.17, rank: '2nd', color: 'bg-purple-600', image: '👨‍🎓' },
-    { name: 'Adam Hossam', percentage: 97.32, rank: '3rd', color: 'bg-yellow-500', image: '👨‍🎓' },
+  // Attendance Data
+  const attendanceStats = {
+    students: 84,
+    teachers: 91,
+  };
+
+  // Events Calendar
+  const events = [
+    { date: '08 Jan, 2023', title: 'School Annual Function', icon: '→' },
+    { date: '27 Jan, 2023', title: 'Sport Competition', icon: '→' },
   ];
 
-  const months = [
-    { name: 'January', color: 'bg-white' },
-    { name: 'February', color: 'bg-orange-400' },
-    { name: 'March', color: 'bg-yellow-400' },
-    { name: 'April', color: 'bg-green-500' },
-    { name: 'May', color: 'bg-orange-400' },
-    { name: 'June', color: 'bg-yellow-400' },
-    { name: 'July', color: 'bg-white' },
-    { name: 'August', color: 'bg-orange-400' },
-    { name: 'September', color: 'bg-yellow-400' },
-    { name: 'October', color: 'bg-white' },
-    { name: 'November', color: 'bg-orange-400' },
-    { name: 'December', color: 'bg-yellow-400' },
+  // Calendar for January 2023
+  const calendarDays = [
+    [1, 2, 3, 4, 5, 6, 7],
+    [8, 9, 10, 11, 12, 13, 14],
+    [15, 16, 17, 18, 19, 20, 21],
+    [22, 23, 24, 25, 26, 27, 28],
+    [29, 30, 31, null, null, null, null],
   ];
 
-  const activities = [
-    'Elimination Game',
-    'Freshman Orientation',
-    'Spring Sports Rally',
-  ];
+  const highlightedDates = [8, 19, 27];
 
   useEffect(() => {
     fetchDashboardData();
@@ -65,13 +84,27 @@ const ModernDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await api.get('/students/students/');
+      setLoading(true);
+      
+      // Fetch real student count
+      const studentsRes = await api.get('/students/students/');
+      const totalStudents = studentsRes.data.count || studentsRes.data.results?.length || 12478;
+      
+      // Fetch real staff count
+      const staffRes = await api.get('/staff/staff/');
+      const totalStaff = staffRes.data.count || staffRes.data.results?.length || 478;
+      
       setStats(prev => ({
         ...prev,
-        students: response.data.count || 90,
+        students: totalStudents,
+        teachers: totalStaff,
+        parents: totalStudents * 2, // Approximate: 2 parents per student
       }));
+      
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      setLoading(false);
     }
   };
 
@@ -80,60 +113,91 @@ const ModernDashboard = () => {
     navigate('/login');
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="w-64 bg-gradient-to-b from-purple-900 to-purple-700 text-white">
+      <div className="w-64 bg-gradient-to-b from-slate-700 to-slate-800 text-white shadow-xl">
         <div className="p-6">
-          <div className="flex items-center space-x-3 mb-8">
-            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-              <FaSchool className="text-purple-700 text-2xl" />
+          {/* Logo */}
+          <div className="mb-8 flex items-center space-x-3">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+              <FaGraduationCap className="text-slate-700 text-2xl" />
             </div>
+            <span className="text-xl font-bold">SCHOOL</span>
           </div>
           
+          {/* Navigation */}
           <nav className="space-y-2">
-            <button className="w-full text-left px-4 py-3 rounded-lg bg-purple-800 hover:bg-purple-600 transition">
-              Dashboard
+            <button className="w-full text-left px-4 py-3 rounded-lg bg-white text-slate-800 font-semibold transition flex items-center space-x-3">
+              <FaClipboardCheck />
+              <span>Dashboard</span>
             </button>
             <button 
               onClick={() => navigate('/students')}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition"
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3"
             >
-              Students
+              <FaUserGraduate />
+              <span>Students</span>
             </button>
             <button 
               onClick={() => navigate('/staff')}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition"
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3"
             >
-              Teachers
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition">
-              Parents
+              <FaChalkboardTeacher />
+              <span>Teachers</span>
             </button>
             <button 
-              onClick={() => navigate('/events')}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition"
+              onClick={() => navigate('/attendance')}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3"
             >
-              Events
-            </button>
-            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition">
-              Exams
+              <FaClipboardCheck />
+              <span>Attendance</span>
             </button>
             <button 
-              onClick={() => navigate('/assignments')}
-              className="w-full text-left px-4 py-3 rounded-lg hover:bg-purple-600 transition"
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3"
             >
-              Assignment
+              <FaBook />
+              <span>Courses</span>
+            </button>
+            <button 
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3"
+            >
+              <FaClipboardCheck />
+              <span>Exam</span>
+            </button>
+            <button 
+              onClick={() => navigate('/fees')}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3"
+            >
+              <FaWallet />
+              <span>Payment</span>
             </button>
           </nav>
         </div>
 
-        <div className="absolute bottom-8 left-6 right-6">
+        {/* Bottom Actions */}
+        <div className="absolute bottom-8 left-6 right-6 space-y-2">
+          <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-600 transition flex items-center space-x-3">
+            <FaCog />
+            <span>Settings</span>
+          </button>
           <button
             onClick={handleLogout}
-            className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+            className="w-full text-left px-4 py-3 rounded-lg hover:bg-red-600 transition flex items-center space-x-3"
           >
-            Logout
+            <FaSignOutAlt />
+            <span>Logout</span>
           </button>
         </div>
       </div>
@@ -144,13 +208,32 @@ const ModernDashboard = () => {
         <div className="bg-white border-b px-8 py-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Welcome to Itahari International School</h1>
-              <p className="text-sm text-gray-500">School Year 2025 - 2026</p>
+              <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm font-semibold">{user?.first_name} {user?.last_name}</p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
+            <div className="flex items-center space-x-6">
+              {/* Search */}
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search for students/teachers/documents..."
+                  className="w-96 px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <FaSearch className="absolute left-3 top-3 text-gray-400" />
+              </div>
+              
+              {/* Notifications */}
+              <button className="relative">
+                <FaBell className="text-2xl text-gray-600" />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+                  3
+                </span>
+              </button>
+              
+              {/* User Profile */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                  {user?.first_name?.charAt(0)}{user?.last_name?.charAt(0)}
+                </div>
               </div>
             </div>
           </div>
@@ -159,140 +242,264 @@ const ModernDashboard = () => {
         {/* Stats Cards */}
         <div className="p-8">
           <div className="grid grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-400">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm mb-2">Schools</p>
-                  <p className="text-4xl font-bold text-gray-800">{stats.schools}</p>
+            {/* Students Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <FaUserGraduate className="text-2xl text-blue-600" />
                 </div>
-                <FaSchool className="text-5xl text-red-400" />
               </div>
+              <p className="text-gray-500 text-sm mb-1">Students</p>
+              <p className="text-3xl font-bold text-gray-800">{stats.students.toLocaleString()}</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-blue-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm mb-2">Teachers</p>
-                  <p className="text-4xl font-bold text-gray-800">{stats.teachers}</p>
+            {/* Teachers Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <FaChalkboardTeacher className="text-2xl text-purple-600" />
                 </div>
-                <FaChalkboardTeacher className="text-5xl text-blue-500" />
               </div>
+              <p className="text-gray-500 text-sm mb-1">Teachers</p>
+              <p className="text-3xl font-bold text-gray-800">{stats.teachers}</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-yellow-400">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm mb-2">Students</p>
-                  <p className="text-4xl font-bold text-gray-800">{stats.students}</p>
+            {/* Parents Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <FaUsers className="text-2xl text-green-600" />
                 </div>
-                <FaUserGraduate className="text-5xl text-yellow-400" />
               </div>
+              <p className="text-gray-500 text-sm mb-1">Parents</p>
+              <p className="text-3xl font-bold text-gray-800">{stats.parents.toLocaleString()}</p>
             </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-500">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm mb-2">Parents</p>
-                  <p className="text-4xl font-bold text-gray-800">{stats.parents}</p>
+            {/* Earnings Card */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <FaMoneyBillWave className="text-2xl text-orange-600" />
                 </div>
-                <FaUsers className="text-5xl text-green-500" />
               </div>
+              <p className="text-gray-500 text-sm mb-1">Earnings</p>
+              <p className="text-3xl font-bold text-gray-800">${stats.earnings.toLocaleString()}k</p>
             </div>
           </div>
 
-          {/* Charts and Info Section */}
-          <div className="grid grid-cols-2 gap-6 mb-8">
-            {/* Calendar Attendance */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Calendar Attendance</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={attendanceData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
+          {/* Charts Section */}
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            {/* Total Earnings Chart */}
+            <div className="col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-bold text-gray-800">Total Earnings</h3>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-slate-700 rounded-full"></div>
+                    <span className="text-sm text-gray-600">Earnings</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <span className="text-sm text-gray-600">Expense</span>
+                  </div>
+                  <select className="border border-gray-300 rounded-lg px-3 py-1 text-sm">
+                    <option>2022</option>
+                    <option>2023</option>
+                    <option>2024</option>
+                    <option>2025</option>
+                  </select>
+                </div>
+              </div>
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={earningsData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="month" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="value" fill="#7c3aed" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="earnings" fill="#334155" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="expense" fill="#fbbf24" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-              
-              <div className="grid grid-cols-4 gap-2 mt-4">
-                {months.map((month, index) => (
-                  <div key={index} className={`${month.color} p-2 rounded text-center text-xs font-medium`}>
-                    {month.name}
-                  </div>
-                ))}
-              </div>
             </div>
 
-            {/* Educational Stage */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Educational stage</h3>
-                <p className="text-xs text-gray-400">All data in Thousand 2021 - 2022</p>
-              </div>
+            {/* Events Calendar */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Events Calendar</h3>
               
-              <div className="space-y-4">
-                {educationalStages.map((stage, index) => (
-                  <div key={index} className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-3 h-3 rounded-full`} style={{ backgroundColor: stage.color }}></div>
-                      <span className="text-sm text-gray-700">{stage.name}</span>
+              {/* Events List */}
+              <div className="space-y-3 mb-4">
+                {events.map((event, index) => (
+                  <div key={index} className="flex justify-between items-start">
+                    <div>
+                      <p className="text-xs text-gray-500">{event.date}</p>
+                      <p className="text-sm font-semibold text-gray-800">{event.title}</p>
                     </div>
-                    <span className="text-lg font-bold text-gray-800">{stage.count}</span>
+                    <span className="text-gray-400">{event.icon}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 h-40 flex items-end justify-around">
-                {educationalStages.map((stage, index) => (
-                  <div
-                    key={index}
-                    className="w-20 rounded-t-lg"
-                    style={{
-                      backgroundColor: stage.color,
-                      height: `${(stage.count / 145) * 100}%`,
-                    }}
-                  ></div>
-                ))}
+              {/* Mini Calendar */}
+              <div className="mt-6">
+                <div className="text-center mb-2">
+                  <p className="text-sm font-bold text-gray-800">January 2023</p>
+                </div>
+                <div className="grid grid-cols-7 gap-1 text-center text-xs">
+                  {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
+                    <div key={day} className="text-gray-500 font-semibold py-1">
+                      {day}
+                    </div>
+                  ))}
+                  {calendarDays.flat().map((day, index) => (
+                    <div
+                      key={index}
+                      className={`py-1 ${
+                        day === null
+                          ? ''
+                          : day === 8
+                          ? 'bg-blue-500 text-white rounded-full'
+                          : highlightedDates.includes(day)
+                          ? 'bg-red-500 text-white rounded-full'
+                          : 'text-gray-700'
+                      }`}
+                    >
+                      {day || ''}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Section */}
-          <div className="grid grid-cols-2 gap-6">
-            {/* Activities & Events */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Activities & Events</h3>
-                <button className="text-sm text-green-600 border border-green-600 px-4 py-1 rounded-full hover:bg-green-50">
-                  View All
-                </button>
-              </div>
+          <div className="grid grid-cols-3 gap-6">
+            {/* Top Performers */}
+            <div className="col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Top Performer</h3>
               
-              <div className="space-y-3">
-                {activities.map((activity, index) => (
-                  <div key={index} className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
-                    <p className="text-sm text-gray-700">{activity}</p>
+              <div className="space-y-4">
+                {/* Table Header */}
+                <div className="grid grid-cols-12 gap-4 text-sm text-gray-500 font-semibold border-b pb-2">
+                  <div className="col-span-1">Photo</div>
+                  <div className="col-span-3">Name</div>
+                  <div className="col-span-2">ID Number</div>
+                  <div className="col-span-2">Year</div>
+                  <div className="col-span-2">Class</div>
+                  <div className="col-span-2">Mark</div>
+                </div>
+
+                {/* Table Rows */}
+                {topPerformers.map((student, index) => (
+                  <div key={index} className="grid grid-cols-12 gap-4 items-center py-2 border-b">
+                    <div className="col-span-1">
+                      <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+                    </div>
+                    <div className="col-span-3">
+                      <p className="text-sm font-semibold text-gray-800">{student.name}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className="text-sm text-gray-600">{student.id}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className="text-sm text-gray-600">Graduated</p>
+                    </div>
+                    <div className="col-span-2">
+                      <p className="text-sm text-gray-600">{student.class}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <div className="flex items-center space-x-2">
+                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-red-400 h-2 rounded-full"
+                            style={{ width: `${student.percentage}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-semibold text-gray-800">
+                          {student.percentage}%
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Top Students */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Top Students</h3>
+            {/* Attendance */}
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <h3 className="text-lg font-bold text-gray-800 mb-6">Attendance</h3>
               
-              <div className="grid grid-cols-3 gap-4">
-                {topStudents.map((student, index) => (
-                  <div key={index} className={`${student.color} rounded-xl p-4 text-white text-center`}>
-                    <div className="text-4xl mb-2">{student.image}</div>
-                    <p className="font-semibold text-sm mb-1">{student.name}</p>
-                    <p className="text-2xl font-bold mb-1">{student.percentage}%</p>
-                    <div className="bg-white bg-opacity-30 rounded-full px-3 py-1 text-xs font-medium">
-                      {student.rank}
+              <div className="space-y-6">
+                {/* Students Attendance */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-gray-600">Students</span>
+                    <span className="text-sm font-bold text-gray-800">{attendanceStats.students}%</span>
+                  </div>
+                  <div className="relative">
+                    <svg className="w-32 h-32 mx-auto" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#e5e7eb"
+                        strokeWidth="3"
+                      />
+                      <path
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#3b82f6"
+                        strokeWidth="3"
+                        strokeDasharray={`${attendanceStats.students}, 100`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-2xl font-bold text-gray-800">{attendanceStats.students}%</span>
                     </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Teachers Attendance */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-gray-600">Teachers</span>
+                    <span className="text-sm font-bold text-gray-800">{attendanceStats.teachers}%</span>
+                  </div>
+                  <div className="relative">
+                    <svg className="w-32 h-32 mx-auto" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#e5e7eb"
+                        strokeWidth="3"
+                      />
+                      <path
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#fbbf24"
+                        strokeWidth="3"
+                        strokeDasharray={`${attendanceStats.teachers}, 100`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-2xl font-bold text-gray-800">{attendanceStats.teachers}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Section */}
+              <div className="mt-6 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl p-4 text-white text-center">
+                <p className="text-sm mb-3">Join the community and find out more...</p>
+                <button className="bg-white text-slate-800 px-6 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition">
+                  Explore now
+                </button>
               </div>
             </div>
           </div>
