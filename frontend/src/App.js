@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './components/auth/Login';
-import AdvancedDashboard from './components/dashboard/AdvancedDashboard';
+import ModernDashboard from './components/dashboard/ModernDashboard';
 import StudentsList from './components/students/StudentsList';
 import AddStudent from './components/students/AddStudent';
 import StudentProfile from './components/students/StudentProfile';
@@ -40,7 +40,7 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <AdvancedDashboard />
+                <ModernDashboard />
               </ProtectedRoute>
             }
           />
