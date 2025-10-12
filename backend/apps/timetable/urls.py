@@ -1,7 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ClassRoomViewSet, SubjectViewSet, PeriodViewSet, TimetableViewSet
 
-app_name = 'timetable'
+router = DefaultRouter()
+router.register(r'classrooms', ClassRoomViewSet, basename='classroom')
+router.register(r'subjects', SubjectViewSet, basename='subject')
+router.register(r'periods', PeriodViewSet, basename='period')
+router.register(r'timetables', TimetableViewSet, basename='timetable')
 
 urlpatterns = [
-    # URLs will be added here
+    path('', include(router.urls)),
 ]

@@ -1,7 +1,12 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import NoticeViewSet, MessageViewSet, NotificationViewSet
 
-app_name = 'communication'
+router = DefaultRouter()
+router.register(r'notices', NoticeViewSet, basename='notice')
+router.register(r'messages', MessageViewSet, basename='message')
+router.register(r'notifications', NotificationViewSet, basename='notification')
 
 urlpatterns = [
-    # URLs will be added here
+    path('', include(router.urls)),
 ]

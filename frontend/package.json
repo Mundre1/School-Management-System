@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "itahari-international-school",
+  "version": "1.0.0",
+  "description": "Complete School Management System for Itahari International School",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.10",

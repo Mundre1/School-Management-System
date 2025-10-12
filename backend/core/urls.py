@@ -1,6 +1,6 @@
 """
-URL Configuration for Smart School ERP System
-Professional API routing with versioning
+URL Configuration for Itahari International School Management System
+Complete Professional API routing with versioning
 """
 
 from django.contrib import admin
@@ -26,7 +26,8 @@ from rest_framework.response import Response
 def api_root(request):
     """API Root - Welcome endpoint"""
     return Response({
-        'message': 'Welcome to Smart School ERP API',
+        'message': 'Welcome to Itahari International School Management System API',
+        'school': 'Itahari International School',
         'version': '1.0.0',
         'endpoints': {
             'admin': '/admin/',
@@ -88,6 +89,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Custom Admin Site Configuration
-admin.site.site_header = "Smart School ERP Administration"
-admin.site.site_title = "Smart School ERP Admin"
-admin.site.index_title = "Welcome to Smart School ERP System"
+admin.site.site_header = "Itahari International School Administration"
+admin.site.site_title = "Itahari International School Admin"
+admin.site.index_title = "Welcome to Itahari International School Management System"

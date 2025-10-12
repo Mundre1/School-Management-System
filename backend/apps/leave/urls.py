@@ -1,7 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import LeaveApplicationViewSet
 
-app_name = 'leave'
+router = DefaultRouter()
+router.register(r'applications', LeaveApplicationViewSet, basename='leave-application')
 
 urlpatterns = [
-    # URLs will be added here
+    path('', include(router.urls)),
 ]

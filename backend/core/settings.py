@@ -1,6 +1,7 @@
 """
-Django settings for Smart School ERP System
-Production-ready configuration reflecting Code IT internship experience
+Django settings for Itahari International School Management System
+Complete Professional School ERP System
+Developed by: Ayush Mundre
 """
 
 from pathlib import Path

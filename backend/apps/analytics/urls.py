@@ -1,7 +1,16 @@
 from django.urls import path
-
-app_name = 'analytics'
+from .views import (
+    DashboardAnalyticsView,
+    StudentAnalyticsView,
+    AttendanceAnalyticsView,
+    FeeAnalyticsView,
+    ResultAnalyticsView
+)
 
 urlpatterns = [
-    # URLs will be added here
+    path('dashboard/', DashboardAnalyticsView.as_view(), name='dashboard-analytics'),
+    path('students/', StudentAnalyticsView.as_view(), name='student-analytics'),
+    path('attendance/', AttendanceAnalyticsView.as_view(), name='attendance-analytics'),
+    path('fees/', FeeAnalyticsView.as_view(), name='fee-analytics'),
+    path('results/', ResultAnalyticsView.as_view(), name='result-analytics'),
 ]
